@@ -31,7 +31,7 @@
     <text>Copyright © by RR-Xing</text>
     <text>(https://rr-xing.rth1.one)</text>
     <text id="xiao">开源：</text>
-    <text>https://github.com/RR-Xing/plant</text>
+    <text>https://github.com/RR-Xing/plantweb</text>
   </view>
 </template>
 
@@ -45,13 +45,6 @@
         yanWu: '正在获取',
         fengShan: '正在获取',
         content: '',
-        shiDuOK: 'hao',
-        shuiCaoOK: 'hao',
-        yanWuOK: 'hao',
-        fengShanOK: 'hao',
-        sdtz: false,
-        sctz: false,
-        ywtz: false,
         jia: 0
       }
     },
@@ -84,42 +77,10 @@
             let shuJu = res.data.data.docs[0]
             let shu = shuJu.message.split('#')
             this.shiDu = shu[1] + '%'
-            if (shu[1] < 10) {
-              this.shiDuOK = 'buHao'
-              if (!this.sdtz) {
-                this.sdtz = true
-              }
-            } else {
-              this.shiDuOK = 'hao'
-              this.sdtz = false
-            }
             this.shuiCao = shu[2]
-            if (shu[2] === '没水了') {
-              this.shuiCaoOK = 'buHao'
-              if (!this.sctz) {
-                this.sctz = true
-              }
-
-            } else {
-              this.shiDuOK = 'hao'
-              this.sctz = false
-            }
             this.yanWu = Math.floor(shu[3] / 1023 * 100) + '%'
-            if (shu[3] > 75) {
-              this.yanWuOK = 'buHao'
-              if (!this.ywtz) {
-                this.ywtz = true
-              }
-            } else {
-              this.yanWuOK = 'hao'
-              this.ywtz = false
-            }
+            
             this.fengShan = shu[4]
-            if (shu[4] === 'on') {
-              this.fengShanOK = 'kai'
-            } else {
-              this.fengShanOK = 'hao'
-            }
             this.time = shuJu.created
           },
           fail: (err) => {
@@ -228,26 +189,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgb(141, 255, 115);
     height: 240rpx;
-    width: 70%;
-    margin: 20rpx;
+    
     border-radius: 0 150rpx;
     padding: 40rpx;
   }
 
-  .buHao {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #ed5a65;
-    height: 240rpx;
-    width: 70%;
-    margin: 20rpx;
-    border-radius: 0 150rpx;
-    padding: 40rpx;
-  }
 
   .kai {
     display: flex;
@@ -263,9 +210,7 @@
   }
 
   .biaoTi {
-    align-self: flex-start;
     font-family: 'gosh';
-    margin-bottom: auto;
     font-size: 55rpx;
   }
 
