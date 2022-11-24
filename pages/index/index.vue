@@ -4,19 +4,19 @@
     <text class="smallTitle">—城市净氧中心</text>
   </view>
   <view class="content">
-    <view :class="shiDuOK">
+    <view>
       <text class='biaoTi'>土壤湿度：</text>
       <text class='jieGuo'>{{shiDu}}</text>
     </view>
-    <view :class="shuiCaoOK">
+    <view>
       <text class='biaoTi'>水槽水量情况：</text>
       <text class='jieGuo'>{{shuiCao}}</text>
     </view>
-    <view :class="yanWuOK">
+    <view>
       <text class='biaoTi'>烟雾浓度：</text>
       <text class='jieGuo'>{{yanWu}}</text>
     </view>
-    <view :class="fengShanOK">
+    <view>
       <text class='biaoTi'>小风扇状态：</text>
       <text class='jieGuo'>{{fengShan}}</text>
     </view>
@@ -28,7 +28,7 @@
   </view>
   <hr>
   <view class="copy">
-    <text>Copyright © by RR-Xing</text>
+    <text>Copyright ©2022 by RR-Xing</text>
     <text>(https://rr-xing.rth1.one)</text>
     <text id="xiao">开源：</text>
     <text>https://github.com/RR-Xing/plantweb</text>
@@ -45,15 +45,15 @@
         yanWu: '正在获取',
         fengShan: '正在获取',
         content: '',
-        jia: 0
+        jia: false
       }
     },
 
     onShow() {
-      if(this.jia === 0){
+      if(!this.jia){
         this.huoQu()
         this.timer = setInterval(() => this.huoQu(), 60000)
-        this.jia = 1
+        this.jia = true
       } 
     },
     onUnload() {
@@ -137,11 +137,13 @@
 <style>
   @font-face {
     font-family: 'tit';
-    src: url(~@/static/1.ttf);
+    src: url(https://vkceyugu.cdn.bspapp.com/VKCEYUGU-9ca91e29-6a09-4cad-a876-ffa5f33086fc/1bc42c18-9119-40e8-be9d-8ad7deab7470.ttf);
+    font-display: swap;
   }
   @font-face {
     font-family: 'gosh';
-    src: url(~@/static/2.ttf);
+    src: url(https://vkceyugu.cdn.bspapp.com/VKCEYUGU-9ca91e29-6a09-4cad-a876-ffa5f33086fc/76f111de-5b80-498a-98f4-ffb2107858b9.ttf);
+    font-display: swap;
   }
   .tiMu{
     display: flex;
@@ -170,18 +172,18 @@
   }
 
   page {
-    background-image: url(~@/static/back.webp);
+    background-image: url(https://vkceyugu.cdn.bspapp.com/VKCEYUGU-9ca91e29-6a09-4cad-a876-ffa5f33086fc/742a1c36-1e06-428f-9708-f8bc33d84fb3.webp);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    min-height: 100vh;
   }
 
 
 
   text {
     font-size: 43rpx;
-    font-weight: 400;
   }
 
   .hao {
@@ -189,23 +191,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 240rpx;
-    
-    border-radius: 0 150rpx;
-    padding: 40rpx;
-  }
-
-
-  .kai {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #23a0ff;
-    height: 240rpx;
-    width: 70%;
-    margin: 20rpx;
-    border-radius: 0 150rpx;
     padding: 40rpx;
   }
 
@@ -215,8 +200,10 @@
   }
 
   .jieGuo {
+    font-family: 'gosh';
     align-self: center;
     margin-bottom: auto;
+    font-size: 45rpx;
   }
 
   .shuoMing {
@@ -240,6 +227,7 @@
     flex-direction: column;
     align-items: center;
     background-color: rgba(39, 40, 51, 0.8);
+    margin-top: auto;
   }
   
   .copy text{
