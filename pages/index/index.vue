@@ -1,33 +1,38 @@
 <template>
-  <view class="tiMu">
-    <text class="bigTitle">AI护</text>
-    <text class="smallTitle">—城市净氧中心</text>
-  </view>
-  <view class="content">
-    <view>
-      <text class='biaoTi'>土壤湿度：</text>
-      <text class='jieGuo'>{{shiDu}}</text>
+  <div class="all col-12 col-lg-9">
+    <view class="tiMu d">
+      <text>AI护—城市净氧中心</text>
     </view>
-    <view>
-      <text class='biaoTi'>水槽水量情况：</text>
-      <text class='jieGuo'>{{shuiCao}}</text>
+    <view class="fu">
+      <text class="alert alert-info col-11 col-lg-9">样板程序，仅供展示</text>
+      <text class="alert alert-info col-11 col-lg-9">无浇水阈值设置，完整功能请联系作者</text>
     </view>
-    <view>
-      <text class='biaoTi'>烟雾浓度：</text>
-      <text class='jieGuo'>{{yanWu}}</text>
+    <hr class='tou'>
+    <view class="content d col-11 col-lg-7">
+      <view>
+        <text class='biaoTi'>土壤湿度：</text>
+        <text class='jieGuo'>{{shiDu}}</text>
+      </view>
+      <view>
+        <text class='biaoTi'>水槽水量情况：</text>
+        <text class='jieGuo'>{{shuiCao}}</text>
+      </view>
+      <view>
+        <text class='biaoTi'>烟雾浓度：</text>
+        <text class='jieGuo'>{{yanWu}}</text>
+      </view>
+      <view>
+        <text class='biaoTi'>小风扇状态：</text>
+        <text class='jieGuo'>{{fengShan}}</text>
+      </view>
+      <view class="hao d">
+        <text class='biaoTi'>最后更新时间：</text>
+        <text class='jieGuo'>{{time}}</text>
+      </view>
     </view>
-    <view>
-      <text class='biaoTi'>小风扇状态：</text>
-      <text class='jieGuo'>{{fengShan}}</text>
-    </view>
-    <view class="hao">
-      <text class='biaoTi'>最后更新时间：</text>
-      <text class='jieGuo'>{{time}}</text>
-    </view>
-    <text class="shuoMing">（每分钟更新一次）</text>
-  </view>
-  <hr>
+  </div>
   <view class="copy">
+    <hr class='di'>
     <text>Copyright ©2022 by RR-Xing</text>
     <text>(https://rr-xing.rth1.one)</text>
     <text id="xiao">开源：</text>
@@ -44,17 +49,16 @@
         shuiCao: '正在获取',
         yanWu: '正在获取',
         fengShan: '正在获取',
-        content: '',
         jia: false
       }
     },
 
     onShow() {
-      if(!this.jia){
+      if (!this.jia) {
         this.huoQu()
         this.timer = setInterval(() => this.huoQu(), 60000)
         this.jia = true
-      } 
+      }
     },
     onUnload() {
       clearInterval(this.timer)
@@ -79,7 +83,6 @@
             this.shiDu = shu[1] + '%'
             this.shuiCao = shu[2]
             this.yanWu = Math.floor(shu[3] / 1023 * 100) + '%'
-            
             this.fengShan = shu[4]
             this.time = shuJu.created
           },
@@ -99,34 +102,9 @@
                 }
               }
             })
-
           },
           complete: () => {
             uni.hideLoading()
-          }
-        })
-      },
-      faSong() {
-
-        uni.request({
-          url: 'https://iot_s1.dfrobot.com.cn/apiv2/publish?topic=bGJkTK1nR&msg=' + this.content +
-            '&token=711b0145cf743d16e4b30dcdaf9ab4e2&iname=wBE94qNnR&ipwd=wfE9VqHngz&timemark=1665110169024',
-          method: 'GET',
-          dataType: 'json',
-          complete: res => {
-            if (res.message = 'Success') {
-              uni.showToast({
-                icon: 'success',
-                title: '发送成功！！！'
-              })
-              this.content = ''
-            } else {
-              uni.showToast({
-                icon: 'fail',
-                title: '发送失败！！！'
-              })
-              this.content = ''
-            }
           }
         })
       }
@@ -135,40 +113,47 @@
 </script>
 
 <style>
+  @import url(https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css);
+
   @font-face {
     font-family: 'tit';
     src: url(https://vkceyugu.cdn.bspapp.com/VKCEYUGU-9ca91e29-6a09-4cad-a876-ffa5f33086fc/1bc42c18-9119-40e8-be9d-8ad7deab7470.ttf);
     font-display: swap;
   }
+
   @font-face {
     font-family: 'gosh';
     src: url(https://vkceyugu.cdn.bspapp.com/VKCEYUGU-9ca91e29-6a09-4cad-a876-ffa5f33086fc/76f111de-5b80-498a-98f4-ffb2107858b9.ttf);
     font-display: swap;
   }
-  .tiMu{
+
+  .all {
+    background-color: rgba(106, 107, 111, 0.4);
+    flex: 1;
     display: flex;
     flex-direction: column;
+    align-items: center;
+  }
+
+  .tiMu {
+    display: flex;
+    justify-content: center;
     color: #20a162;
   }
-  
-  .bigTitle{
-    font-size: 120rpx;
-    font-style:italic;
+
+  .tiMu text {
+    font-size: 75rpx;
     font-family: 'tit';
   }
-  
-  .smallTitle{
-    font-size: 100rpx;
-    align-self: flex-end;
-    font-family: 'tit';
-  }
-  
+
   .content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
+    background-color: rgba(107, 108, 111, 0.35);
+    border-radius: 10rpx;
+    padding-top: 30rpx;
   }
 
   page {
@@ -177,13 +162,10 @@
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    min-height: 100vh;
-  }
-
-
-
-  text {
-    font-size: 43rpx;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .hao {
@@ -211,36 +193,56 @@
     color: white;
   }
 
-  .shuRu {
-    display: flex;
-    justify-content: center;
-  }
-
-  input {
-    border-bottom: 1px blue solid;
-    height: 100%;
-    flex: 1;
-  }
-  
-  .copy{
+  .copy {
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: rgba(39, 40, 51, 0.8);
     margin-top: auto;
+    align-self: flex-end;
+    width: 100%;
   }
-  
-  .copy text{
-    margin: 15rpx 0;
+
+  .copy text {
+    margin: 10rpx 0;
     color: aliceblue;
     font-weight: lighter;
+    font-size: 40rpx;
   }
-  
-  #xiao{
+
+  #xiao {
     font-size: 35rpx;
   }
-  
-  hr{
+
+  .di {
     color: #63bbd0;
+    width: 100%;
+    height: 3rpx;
+    margin: 0;
+  }
+
+  .d {
+    margin: 50rpx 0;
+  }
+
+  .fu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+
+  .alert {
+    margin: 20rpx;
+    padding-left: 1.5rem;
+    opacity: 0.8;
+  }
+
+  .tou {
+    height: 20rpx;
+    color: #20a162;
+    width: 35%;
+    opacity: 0.75;
+    margin-top: 40rpx;
   }
 </style>
